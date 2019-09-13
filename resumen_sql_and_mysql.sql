@@ -12,7 +12,10 @@ Sirve para crear la estructura de una base de datos. Se pueden manipular:
 -- Show: Mostrar las bases de datos y tablas existentes
 
 SHOW DATABASES; 
-SHOW FULL TABLES; 
+SHOW TABLES; 
+SHOW WARNINGS; 
+SELECT DATABASE(); -- Muestra la base de datos actual (en la que estamos posicionados)
+
 
 -- Describe: Mostrar la estructura de una tabla
 
@@ -27,10 +30,10 @@ USE `database_name`;
 CREATE DATABASE IF NOT EXISTS `database_name` DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `table_name` (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     attr1 VARCHAR(255) NOT NULL,
     attr2 BOOLEAN NOT NULL,
-    attr3 INT NOT NULL,
+    attr3 INT NOT NULL COMMENT 'random_comment', -- Comment: Añade comentario al nombre de la columna (solo puede ser visto por quien ve la estructura de la DB)
     CONSTRAINT FOREIGN KEY (attr3) REFERENCES `other_table_name` (`other_table_name_PK`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
