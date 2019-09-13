@@ -1,3 +1,23 @@
+-- Tipos de dato más comunes en MySQL
+
+TINYINT
+SMALLINT
+INT
+BIGINT
+
+FLOAT 
+DOUBLE(number_of_digits, digits_after_the_comma) -- Ejemplo: Double(6,2) = 1024.35
+
+CHAR(number_of_characters) -- Reserva la memoria estáticamente
+VARCHAR(number_of_characters) -- Reserva la memoria dinámicamente
+
+DATE -- Almacena fechas pero no horas
+DATETIME -- Almacena cualquier fecha. Es más lento que TIMESTAMP
+TIMESTAMP -- Almacena fechas en segundos a partir del número EPOC (desde 1970)
+
+ENUM(value1, value2, value3) -- Almacena solo los valores especificados
+
+
 -- DDL: Data Definition Language
 
 /*
@@ -14,12 +34,14 @@ Sirve para crear la estructura de una base de datos. Se pueden manipular:
 SHOW DATABASES; 
 SHOW TABLES; 
 SHOW WARNINGS; 
+SHOW FULL COLUMNS FROM `table_names`;
 SELECT DATABASE(); -- Muestra la base de datos actual (en la que estamos posicionados)
 
 
 -- Describe: Mostrar la estructura de una tabla
 
 DESCRIBE `table_name`;
+DESC `table_name`;
 
 -- Use: Usar una base de datos (cambiarla a por defecto)
 
@@ -46,6 +68,8 @@ ALTER TABLE `table_name` AUTO_INCREMENT = 1; -- Setea el auto increment a 1
 
 ALTER TABLE `table_name` 
 ADD COLUMN `column_name` INT NOT NULL AFTER `previous_column_name`;
+
+ALTER TABLE usuarios MODIFY COLUMN id_ciudad INT NOT NULL;
 
 ALTER TABLE `table_name`
 DROP COLUMN `column_name`
@@ -75,7 +99,13 @@ COMMIT TRAN `transaction_name` -- Confirma los cambios de una transacción
 INSERT INTO `table_name`
 (attr1, attr2, attr3)
 VALUES
-(value1, value2, value3);
+(value1, value2, value3),
+(value4, value5, value6);
+
+INSERT INTO `table_name` SET `column_name` = value1, `other_column_name` = value2;
+
+INSERT INTO `table_name` VALUES (value1, value2, value3)
+ON DUPLICATE KEY UPDATE attr3 = VALUES (value3); -- On Duplicate Key: Realiza acciones si se repite un campo único
 
 -- Update: Actualiza tuplas en una tabla
 
@@ -107,6 +137,8 @@ SELECT SUM(*) FROM `table_name`; -- Sum: Suma los registros
 SELECT GROUP_CONCAT(*); -- Group_Concat: Concatena los registros separándolos por coma. Se puede personalizar con los modificadores DISTINCT, ORDER BY y SEPARATOR
 
 SELECT * FROM `table_name` WHERE `column_name` = value1; -- Where: Filtra tuplas o registros a partir de condiciones
+
+SELECT * FROM `table_name` WHERE `column_name` = value1 \G -- \G: Muestra de manera más amigable el query si el resultado se sale de la pantalla
 
 SELECT * FROM `table_name` WHERE `column_name` LIKE '%text%'; -- Like / Not Like: Nos ayuda a traer registros de los cuales conocemos solo una parte de la información
 
