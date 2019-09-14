@@ -18,6 +18,24 @@ TIMESTAMP -- Almacena fechas en segundos a partir del número EPOC (desde 1970)
 ENUM(value1, value2, value3) -- Almacena solo los valores especificados
 
 
+-- Funciones más comunes en MySQL
+
+YEAR() -- Trae el año de una fecha
+MONTH() -- Trae el mes de una fecha
+DAY()  -- Trae el día de una fecha
+TO_DAYS() -- Trae la cantidad de días pasados desde el 01/01/0000 hasta la fecha indicada entre paréntesis
+NOW() -- Trae la fecha actual
+
+COUNT() -- Cuenta registros
+SUM() -- Suma registros
+AVG() -- Promedia registros
+STDDEV() -- Trae la desviación estándar de registros
+
+MAX() -- Me trae el registro con el campo más grande
+MIN() -- Me trae el registro con el campo más pequeño
+
+CONCAT(value1, " ", value2) -- Concatena valores en una columna
+
 -- DDL: Data Definition Language
 
 /*
@@ -88,6 +106,10 @@ Manipula el contenido de una base de datos
 
 */
 
+-- Truncate: Borra el contenido de una tabla
+
+TRUNCATE `table_name`;
+
 -- Transacciones
 
 BEGIN TRAN `transaction_name` -- Inicia una transacción
@@ -124,6 +146,8 @@ DELETE FROM `table_name`;
 
 SELECT * FROM `table_name`; -- From: Define de donde se van a sacar los datos
 
+SELECT DISTINCT `column_name` FROM `table_name`; -- Distinct: Me trae los los valores sin repetir los mismos 
+
 SELECT * FROM `table_a` 
 INNER // LEFT // RIGHT JOIN `table_b` -- Joins: Sirven para aplicar union, intersección y diferencia entre conjuntos
 ON `table_a`.`key` = `table_b`.`key`
@@ -142,7 +166,7 @@ SELECT * FROM `table_name` WHERE `column_name` = value1 \G -- \G: Muestra de man
 
 SELECT * FROM `table_name` WHERE `column_name` LIKE '%text%'; -- Like / Not Like: Nos ayuda a traer registros de los cuales conocemos solo una parte de la información
 
-SELECT * FROM `table_name` WHERE `column_name` BETWEEN value1 AND value2; -- Between / Not Between: Trae registros que estén en el medio de dos
+SELECT * FROM `table_name` WHERE `column_name` BETWEEN value1 AND value2; -- Between / Not Between: Trae registros que estén en el medio de dos, ambos inlusive
 
 SELECT * FROM `table_name` WHERE `column_name` IS IN (value1, value2, value3); -- Is in / Is not in: Trae registros que estén o no en cierto conjunto
 
@@ -152,7 +176,7 @@ SELECT * FROM `table_name` GROUP BY `column_name`; -- Group By: Recorre todos lo
 
 SELECT * FROM `table_name` GROUP BY `column_name` HAVING `other_column_name` = value1; -- Having: Cumple la misma función de Where, solo que sirve después de agrupar
 
-SELECT * FROM `table_name` ORDER BY `column_name`; -- Order By: Ordena los registros por la columna especificada. Se pueden emplear los modificadores DESC y ASC (para ordernar de manera descendente o ascendente respectivamente)
+SELECT * FROM `table_name` ORDER BY `column_name` // RAND(); -- Order By: Ordena los registros por la columna especificada. Se pueden emplear los modificadores DESC y ASC (para ordernar de manera descendente o ascendente respectivamente). Con la función RAND se ordena de manera aleatoria
 
 SELECT * FROM `table_name` LIMIT number1; -- Limit: Trae la cantidad de registros especificada
 

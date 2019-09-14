@@ -62,3 +62,64 @@ VALUES
     ),
     1960
 );
+
+-- ¿Qué nacionalidades hay? 
+
+SELECT nationality
+FROM authors
+WHERE nationality IS NOT NULL
+GROUP BY nationality
+ORDER BY nationality;
+
+-- ¿Cuantos escritores hay de cada nacionalidad? 
+
+SELECT nationality, COUNT(*) AS quantity_of_authors
+FROM authors
+GROUP BY nationality
+ORDER BY nationality;
+
+-- ¿Cuantos libros hay de cada nacionalidad? 
+
+SELECT nationality, COUNT(*) AS quantity_of_books
+FROM books AS b 
+LEFT JOIN authors AS a
+    ON b.author_id = a.author_id
+GROUP BY nationality; 
+
+-- ¿Cuál es el promedio/desviación estándar del precio de libros? 
+
+SELECT AVG(price) as `standard_deviation` FROM books; 
+
+-- ¿Cuál es el promedio/desviación estándar de la cantidad de autores por nacionalidad? 
+
+SELECT AVG(quantity_of_authors) as standard_deviation_by_nationality FROM
+    (SELECT COUNT(*) AS quantity_of_authors
+    FROM authors
+    GROUP BY nationality) 
+    AS quantity_of_authors_by_nationality; 
+
+-- ¿Cuál es el precio máximo y mínimo de un libro?
+
+SELECT price as max_price FROM books
+ORDER BY price DESC
+LIMIT 1;
+
+SELECT price as min_price FROM books
+WHERE price IS NOT NULL
+ORDER BY price ASC
+LIMIT 1; 
+
+-- ¿Cómo quedaría el reporte de préstamos? 
+
+SELECT c.name, b.title, 
+(CASE 
+    WHEN finished = 1 THEN 'returned'
+    WHEN finished = 0 THEN 'owed'
+END) AS `state`
+FROM transactions AS t
+INNER JOIN books AS b
+    ON t.book_id = b.book_id
+INNER JOIN clients AS c 
+    ON t.client_id = c.client_id
+WHERE (`type` = 'lend' and finished = 0) or `type` = 'return' 
+ORDER BY `name`; 
